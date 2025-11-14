@@ -17,8 +17,11 @@ export function CountryPanel({ countryCode, countryName, flag }: CountryPanelPro
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Get API URL from environment variable
+  // Get API URL from environment variable (same as apiService.ts)
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+  
+  // Log API URL for verification
+  console.log('CountryPanel API URL:', API_BASE_URL);
 
   // Fetch country data when panel opens
   useState(() => {
