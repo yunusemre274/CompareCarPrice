@@ -17,14 +17,16 @@ export function CountryPanel({ countryCode, countryName, flag }: CountryPanelPro
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Get API URL from environment variable
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+
   // Fetch country data when panel opens
   useState(() => {
     const fetchCountryData = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || '/api';
-        const response = await fetch(`${apiUrl}/country/${countryCode}`);
+        const response = await fetch(`${API_BASE_URL}/country/${countryCode}`);
         if (!response.ok) throw new Error('Failed to fetch country data');
         const data = await response.json();
         setCountryData(data);
