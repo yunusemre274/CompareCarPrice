@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: car-compare-api
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: CACHE_TTL_MINUTES
+        value: 10
+      - key: CACHE_TTL_SECONDS
+        value: 600
+    healthCheckPath: /api/countries
