@@ -1,6 +1,6 @@
 // API Service for backend integration
-// In development, use proxy (just /api), in production use full URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://localhost:5001/api');
+// Always use full URL to backend server
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 export interface CountryComparisonData {
   country_name: string;

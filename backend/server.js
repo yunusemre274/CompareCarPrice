@@ -24,9 +24,11 @@ const PORT = process.env.PORT || 5001;
 // ============= MIDDLEWARE =============
 
 // Security headers
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 
-// Enable CORS
+// Enable CORS for frontend
 app.use(cors({
   origin: ['http://localhost:8080', 'http://localhost:3000', 'http://127.0.0.1:8080'],
   credentials: true,
