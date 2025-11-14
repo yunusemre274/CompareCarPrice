@@ -2,6 +2,9 @@
 // Always use full URL to backend server
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
+// Log API URL for verification (remove in production if desired)
+console.log('🔗 API Base URL:', API_BASE_URL);
+
 export interface CountryComparisonData {
   country_name: string;
   country_code: string;
@@ -204,10 +207,9 @@ class ApiService {
         const errorMsg = error.message.toLowerCase();
         if (errorMsg.includes('fetch') || errorMsg.includes('network') || errorMsg.includes('failed')) {
           console.error(`Network error for ${endpoint}:`, error);
-          const backendUrl = import.meta.env.DEV ? 'http://localhost:5001' : API_BASE_URL;
           throw new Error(
-            `Unable to connect to the backend server. Please make sure the server is running at ${backendUrl}. ` +
-            `You can start it by running: cd backend && npm run dev`
+            `Unable to connect to the backend server at ${API_BASE_URL}. ` +
+            `Please verify: 1) Backend is running, 2) CORS is configured, 3) VITE_API_URL is set correctly.`
           );
         }
       }
