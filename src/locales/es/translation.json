@@ -77,6 +77,15 @@
     "highlightExpensive": "{{country}} muestra el precio con impuestos más alto: {{price}}",
     "highlightSpread": "Diferencia de {{spread}} entre el mercado más barato y el más caro",
     "highlightAverage": "Precio promedio global con impuestos: {{price}}",
+    "specsHeading": "Especificaciones clave",
+    "specs": {
+      "torque": "Torque",
+      "maxSpeed": "Velocidad máx.",
+      "fuelType": "Tipo de combustible",
+      "transmission": "Transmisión",
+      "horsepower": "Caballos de fuerza",
+      "origin": "País productor"
+    },
     "daysLabel": "{{value}} días",
     "priceRange": "{{min}} → {{max}}",
     "scoreLabel": "Índice de accesibilidad",

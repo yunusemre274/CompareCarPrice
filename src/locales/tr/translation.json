@@ -77,6 +77,15 @@
     "highlightExpensive": "{{country}} en yüksek vergili fiyatı {{price}} ile gösteriyor",
     "highlightSpread": "En ucuz ve en pahalı pazar arasındaki fark: {{spread}}",
     "highlightAverage": "Küresel ortalama vergili fiyat: {{price}}",
+    "specsHeading": "Temel teknik veriler",
+    "specs": {
+      "torque": "Tork",
+      "maxSpeed": "Azami hız",
+      "fuelType": "Yakıt tipi",
+      "transmission": "Şanzıman",
+      "horsepower": "Beygir gücü",
+      "origin": "Üretici ülke"
+    },
     "daysLabel": "{{value}} gün",
     "priceRange": "{{min}} → {{max}}",
     "scoreLabel": "Erişilebilirlik skoru",
