@@ -1,0 +1,119 @@
+{
+  "common": {
+    "appName": "CarCompare",
+    "tagline": "Küresel Fiyat Karşılaştırması",
+    "loading": "Yükleniyor...",
+    "loadingComparison": "Karşılaştırma verileri yükleniyor...",
+    "dataUpdated": "Veri güncellendi",
+    "fxUpdated": "Kur güncellendi",
+    "lastUpdated": "Son güncelleme",
+    "notAvailable": "Yok"
+  },
+  "nav": {
+    "title": "CarCompare",
+    "subtitle": "Küresel Fiyat Karşılaştırması"
+  },
+  "languageSelector": {
+    "label": "Dil",
+    "button": "Dil seç"
+  },
+  "currencySelector": {
+    "placeholder": "Para birimi seç...",
+    "search": "Para birimi ara...",
+    "empty": "Para birimi bulunamadı."
+  },
+  "hero": {
+    "badge": "30'dan fazla ülkede 250+ aracı karşılaştırın",
+    "heading": "Küresel Araç Fiyat Karşılaştırması",
+    "description": "Gerçek zamanlı araç fiyatlarını, ekonomik içgörüleri, satın alma gücü analizlerini ve erişilebilirlik metriklerini keşfedin"
+  },
+  "stats": {
+    "realtime": "Gerçek zamanlı veriler",
+    "multiCurrency": "Çoklu para birimi desteği",
+    "countries": "30+ ülke"
+  },
+  "search": {
+    "placeholder": "Herhangi bir araç modeli ara...",
+    "pressEnter": "Enter'a basın",
+    "suggestions": "En üstteki {{count}} sonuç alfabetik olarak gösteriliyor"
+  },
+  "results": {
+    "notFound": "\"{{query}}\" modeli veritabanında bulunamadı",
+    "suggestionsIntro": "Şunları aramayı deneyin:",
+    "showingPrices": "{{currency}} cinsinden {{count}} ülkede fiyatları gösteriyoruz",
+    "basePriceLabel": "Taban Fiyat (USD)"
+  },
+  "errors": {
+    "fetchFailed": "Araç karşılaştırma verileri alınamadı"
+  },
+  "infoCard": {
+    "title": "Bu veriler hakkında:",
+    "points": [
+      "Fiyatlara mümkün olduğunda yerel vergi ve gümrükler dahildir",
+      "Asgari ücret verileri aylık net geliri USD cinsinden gösterir",
+      "Satın alma süresi hesabı aylık ücretin 30 güne bölünmesine dayanır",
+      "Satın alma gücü puanı: 0-100 ölçeği (yüksek daha iyi erişilebilirlik demektir)",
+      "Kur verileri her 15 dakikada bir güncellenir",
+      "Ekonomik veriler Dünya Bankası, IMF ve REST Countries API'den alınır",
+      "Detaylı ekonomik bilgiler için herhangi bir ülke satırına tıklayın"
+    ],
+    "footer": "Veri Kaynağı: {{source}} • Son Güncelleme: {{timestamp}}"
+  },
+  "carPanel": {
+    "title": "Araç özeti",
+    "subtitle": "{{brand}} • {{category}} • {{year}}",
+    "basePriceLabel": "Taban fiyat (USD)",
+    "basePriceInfo": "Üretici tavsiye edilen USD fiyatı",
+    "currencyContext": "{{currency}} cinsinden gösterilir",
+    "cheapestMarket": "En ucuz pazar",
+    "expensiveMarket": "En pahalı pazar",
+    "bestAffordability": "En erişilebilir pazar",
+    "averagePrice": "Ortalama vergili fiyat",
+    "priceSpread": "Fiyat aralığı",
+    "marketHighlights": "Pazar öne çıkanları",
+    "topMarkets": "Fırsat ülkeleri",
+    "watchMarkets": "Yüksek maliyetli piyasalar",
+    "highlightCheapest": "{{country}} en düşük vergili fiyatı {{price}} ile sunuyor",
+    "highlightExpensive": "{{country}} en yüksek vergili fiyatı {{price}} ile gösteriyor",
+    "highlightSpread": "En ucuz ve en pahalı pazar arasındaki fark: {{spread}}",
+    "highlightAverage": "Küresel ortalama vergili fiyat: {{price}}",
+    "daysLabel": "{{value}} gün",
+    "priceRange": "{{min}} → {{max}}",
+    "scoreLabel": "Erişilebilirlik skoru",
+    "noData": "Karşılaştırma verisi bulunamadı"
+  },
+  "emptyState": {
+    "title": "Araç fiyatlarını karşılaştırmaya hazır mısınız?",
+    "description": "Gerçek zamanlı fiyatları, erişilebilirlik analizini ve ekonomik içgörüleri görmek için yukarıdaki arama çubuğuna herhangi bir araç modeli yazın"
+  },
+  "comparison": {
+    "dataUpdated": "Veri güncellendi: {{value}}",
+    "fxUpdated": "Kur güncellendi: {{value}} ({{currency}} · {{symbol}})",
+    "columns": {
+      "country": "Ülke",
+      "taxedPrice": "Vergili Fiyat",
+      "taxFreePrice": "Vergisiz Fiyat",
+      "minimumWage": "Aylık Asgari Ücret",
+      "daysToBuy": "Satın alma günü",
+      "powerScore": "Güç Puanı",
+      "equivalentValue": "Eşdeğer Değer",
+      "currency": "Para birimi"
+    },
+    "taxSavings": "-{{value}}% vergi",
+    "hourly": "{{value}}/saat",
+    "days": "{{value}} gün",
+    "summary": {
+      "countriesCompared": "Karşılaştırılan ülke",
+      "bestAffordability": "En uygun ülke",
+      "lowestPrice": "En düşük fiyat",
+      "highestWage": "En yüksek ücret"
+    },
+    "loading": "Karşılaştırma verileri yükleniyor..."
+  },
+  "countryPanel": {
+    "toggleHint": "Detaylı bilgi için tıklayın",
+    "loading": "Ülke detayları yükleniyor...",
+    "error": "Ülke bilgileri yüklenemedi",
+    "lastUpdated": "Son güncelleme: {{value}}"
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "common": {
+    "appName": "CarCompare",
+    "tagline": "Globaler Preisvergleich",
+    "loading": "Wird geladen...",
+    "loadingComparison": "Vergleichsdaten werden geladen...",
+    "dataUpdated": "Daten aktualisiert",
+    "fxUpdated": "Wechselkurs aktualisiert",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "notAvailable": "k. A."
+  },
+  "nav": {
+    "title": "CarCompare",
+    "subtitle": "Globaler Preisvergleich"
+  },
+  "languageSelector": {
+    "label": "Sprache",
+    "button": "Sprache wählen"
+  },
+  "currencySelector": {
+    "placeholder": "Währung wählen...",
+    "search": "Währung suchen...",
+    "empty": "Keine Währung gefunden."
+  },
+  "hero": {
+    "badge": "Vergleiche über 250 Autos in 30+ Ländern",
+    "heading": "Globaler Autopreisvergleich",
+    "description": "Entdecke weltweite Echtzeitpreise inklusive wirtschaftlicher Insights, Kaufkraftanalysen und Leistbarkeitsmetriken"
+  },
+  "stats": {
+    "realtime": "Echtzeitdaten",
+    "multiCurrency": "Mehrwährungs-Support",
+    "countries": "30+ Länder"
+  },
+  "search": {
+    "placeholder": "Nach einem Automodell suchen...",
+    "pressEnter": "Enter drücken",
+    "suggestions": "Top {{count}} Ergebnisse alphabetisch sortiert"
+  },
+  "results": {
+    "notFound": "Modell \"{{query}}\" wurde nicht gefunden",
+    "suggestionsIntro": "Versuche eine dieser Suchen:",
+    "showingPrices": "Preise in {{currency}} über {{count}} Länder hinweg",
+    "basePriceLabel": "Basispreis (USD)"
+  },
+  "errors": {
+    "fetchFailed": "Autovergleichsdaten konnten nicht geladen werden"
+  },
+  "infoCard": {
+    "title": "Informationen zu diesen Daten:",
+    "points": [
+      "Preise enthalten lokale Steuern und Importabgaben, sofern verfügbar",
+      "Mindestlohndaten zeigen das monatliche Nettoeinkommen in USD",
+      "Tage-bis-Kauf basiert auf dem Monatslohn geteilt durch 30 Tage",
+      "Kaufkraft-Score: Skala 0-100 (höher = bessere Leistbarkeit)",
+      "Wechselkurse werden alle 15 Minuten aktualisiert",
+      "Wirtschaftsdaten stammen von Weltbank, IWF und REST Countries API",
+      "Klicke auf eine Länderzeile für detaillierte Wirtschaftsinfos"
+    ],
+    "footer": "Datenquelle: {{source}} • Zuletzt aktualisiert: {{timestamp}}"
+  },
+  "carPanel": {
+    "title": "Fahrzeugübersicht",
+    "subtitle": "{{brand}} • {{category}} • {{year}}",
+    "basePriceLabel": "Basispreis (USD)",
+    "basePriceInfo": "Vom Hersteller empfohlener USD-Preis",
+    "currencyContext": "Angezeigt in {{currency}}",
+    "cheapestMarket": "Günstigster Markt",
+    "expensiveMarket": "Teuerster Markt",
+    "bestAffordability": "Beste Leistbarkeit",
+    "averagePrice": "Durchschnittlicher Bruttopreis",
+    "priceSpread": "Preisspanne",
+    "marketHighlights": "Markt-Highlights",
+    "topMarkets": "Top-Chancen",
+    "watchMarkets": "Teure Märkte",
+    "highlightCheapest": "{{country}} bietet den niedrigsten Bruttopreis mit {{price}}",
+    "highlightExpensive": "{{country}} weist den höchsten Bruttopreis mit {{price}} auf",
+    "highlightSpread": "Spanne von {{spread}} zwischen günstigstem und teuerstem Markt",
+    "highlightAverage": "Globaler Durchschnittspreis: {{price}}",
+    "daysLabel": "{{value}} Tage",
+    "priceRange": "{{min}} → {{max}}",
+    "scoreLabel": "Leistbarkeits-Score",
+    "noData": "Keine Vergleichsdaten verfügbar"
+  },
+  "emptyState": {
+    "title": "Bereit für den Autopreisvergleich?",
+    "description": "Gib ein Automodell in die Suchleiste ein und erhalte Echtzeitpreise, Leistbarkeitsanalysen und Wirtschafts-Insights weltweit"
+  },
+  "comparison": {
+    "dataUpdated": "Daten aktualisiert: {{value}}",
+    "fxUpdated": "Wechselkurs aktualisiert: {{value}} ({{currency}} · {{symbol}})",
+    "columns": {
+      "country": "Land",
+      "taxedPrice": "Preis inkl. Steuern",
+      "taxFreePrice": "Preis exkl. Steuern",
+      "minimumWage": "Monatl. Mindestlohn",
+      "daysToBuy": "Tage bis Kauf",
+      "powerScore": "Power-Score",
+      "equivalentValue": "Äquivalenter Wert",
+      "currency": "Währung"
+    },
+    "taxSavings": "-{{value}}% Steuer",
+    "hourly": "{{value}}/Std",
+    "days": "{{value}} Tage",
+    "summary": {
+      "countriesCompared": "Verglichene Länder",
+      "bestAffordability": "Beste Leistbarkeit",
+      "lowestPrice": "Niedrigster Preis",
+      "highestWage": "Höchster Lohn"
+    },
+    "loading": "Vergleichsdaten werden geladen..."
+  },
+  "countryPanel": {
+    "toggleHint": "Für Details klicken",
+    "loading": "Länderdaten werden geladen...",
+    "error": "Länderdaten konnten nicht geladen werden",
+    "lastUpdated": "Zuletzt aktualisiert: {{value}}"
+  }
+}

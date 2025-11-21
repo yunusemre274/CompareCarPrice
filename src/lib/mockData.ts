@@ -451,4 +451,7 @@ export const currencies = [
   { code: "SGD", symbol: "S$", name: "Singapore Dollar", rate: 1.34 },
   { code: "AED", symbol: "د.إ", name: "UAE Dirham", rate: 3.67 },
   { code: "ZAR", symbol: "R", name: "South African Rand", rate: 18.65 },
+  { code: "SAR", symbol: "ر.س", name: "Saudi Riyal", rate: 3.75 },
+  { code: "NZD", symbol: "NZ$", name: "New Zealand Dollar", rate: 1.62 },
+  { code: "ARS", symbol: "$", name: "Argentine Peso", rate: 880 },
 ];

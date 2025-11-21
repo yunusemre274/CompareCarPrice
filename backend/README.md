@@ -13,6 +13,12 @@ A powerful REST API providing **real-time car price comparison** across global m
 
 ## 🚀 Quick Start
 
+### Automated Data Jobs
+
+- Nightly cron (02:00 server time) triggers `ingestCarCatalog` to pull the latest specs and prices into PostgreSQL.
+- Jobs are registered automatically when the backend boots (`src/server.ts`).
+- To force a manual refresh run `npm run seed`.
+
 ### Installation
 
 ```bash
@@ -22,27 +28,45 @@ npm install
 
 ### Configuration
 
-Create a `.env` file (or copy `.env.example`):
+Create a `.env` file (or copy `.env.example`) and ensure you set at least:
 
 ```env
-PORT=5000
+PORT=5001
 NODE_ENV=development
-CACHE_TTL_SECONDS=600
-RATE_LIMIT_MAX_REQUESTS=100
-CORS_ORIGIN=http://localhost:5173
+DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/carcomparison
+CORS_ORIGIN=http://localhost:8080
+EXCHANGE_RATE_API_KEY=your_exchange_provider_key
+MARKETCHECK_API_KEY=your_marketcheck_key
 ```
+
+### Database & Prisma
+
+```bash
+# create the database + Prisma client
+npx prisma migrate dev --name init
+npx prisma generate
+```
+
+### Seed realistic data (brands, trims, prices)
+
+```bash
+npm run seed
+```
+
+The seed script calls the new ingestion pipeline, which fetches data from CarQuery/MarketCheck (or generates high-quality synthetic data if API keys are not present) and stores everything in PostgreSQL.
 
 ### Start Server
 
 ```bash
-# Development mode with auto-reload
+# Development mode (tsx + legacy Express server)
 npm run dev
 
-# Production mode
+# Build + production
+npm run build
 npm start
 ```
 
-The server will start at `http://localhost:5000`
+The server will start at `http://localhost:5001`
 
 ---
 

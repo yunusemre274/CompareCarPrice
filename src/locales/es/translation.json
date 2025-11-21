@@ -1,0 +1,119 @@
+{
+  "common": {
+    "appName": "CarCompare",
+    "tagline": "Comparación global de precios",
+    "loading": "Cargando...",
+    "loadingComparison": "Cargando datos de comparación...",
+    "dataUpdated": "Datos actualizados",
+    "fxUpdated": "Tipo de cambio actualizado",
+    "lastUpdated": "Última actualización",
+    "notAvailable": "N/D"
+  },
+  "nav": {
+    "title": "CarCompare",
+    "subtitle": "Comparación global de precios"
+  },
+  "languageSelector": {
+    "label": "Idioma",
+    "button": "Elegir idioma"
+  },
+  "currencySelector": {
+    "placeholder": "Elegir moneda...",
+    "search": "Buscar moneda...",
+    "empty": "No se encontraron monedas."
+  },
+  "hero": {
+    "badge": "Compara más de 250 autos en más de 30 países",
+    "heading": "Comparador global de precios de autos",
+    "description": "Descubre precios en tiempo real, información económica, análisis de poder adquisitivo y métricas de accesibilidad"
+  },
+  "stats": {
+    "realtime": "Datos en tiempo real",
+    "multiCurrency": "Soporte multimoneda",
+    "countries": "30+ países"
+  },
+  "search": {
+    "placeholder": "Busca cualquier modelo de auto...",
+    "pressEnter": "Presiona Enter",
+    "suggestions": "Mostrando los {{count}} mejores resultados en orden alfabético"
+  },
+  "results": {
+    "notFound": "El modelo \"{{query}}\" no está en la base de datos",
+    "suggestionsIntro": "Prueba con:",
+    "showingPrices": "Mostrando precios en {{currency}} en {{count}} países",
+    "basePriceLabel": "Precio base (USD)"
+  },
+  "errors": {
+    "fetchFailed": "No se pudieron obtener los datos de comparación"
+  },
+  "infoCard": {
+    "title": "Sobre estos datos:",
+    "points": [
+      "Los precios incluyen impuestos locales y aranceles de importación cuando aplica",
+      "El salario mínimo refleja el ingreso mensual neto en USD",
+      "Los días para comprar se calculan con el salario mensual dividido por 30",
+      "Puntaje de poder adquisitivo: escala 0-100 (más alto = mayor accesibilidad)",
+      "Los tipos de cambio se actualizan cada 15 minutos",
+      "Los datos económicos provienen del Banco Mundial, FMI y REST Countries API",
+      "Haz clic en cualquier país para ver información económica detallada"
+    ],
+    "footer": "Fuente de datos: {{source}} • Última actualización: {{timestamp}}"
+  },
+  "carPanel": {
+    "title": "Resumen del vehículo",
+    "subtitle": "{{brand}} • {{category}} • {{year}}",
+    "basePriceLabel": "Precio base (USD)",
+    "basePriceInfo": "Precio sugerido por el fabricante en USD",
+    "currencyContext": "Mostrado en {{currency}}",
+    "cheapestMarket": "Mercado más barato",
+    "expensiveMarket": "Mercado más caro",
+    "bestAffordability": "Mejor accesibilidad",
+    "averagePrice": "Precio promedio con impuestos",
+    "priceSpread": "Rango de precios",
+    "marketHighlights": "Aspectos destacados del mercado",
+    "topMarkets": "Mercados con oportunidad",
+    "watchMarkets": "Mercados costosos",
+    "highlightCheapest": "{{country}} ofrece el precio con impuestos más bajo: {{price}}",
+    "highlightExpensive": "{{country}} muestra el precio con impuestos más alto: {{price}}",
+    "highlightSpread": "Diferencia de {{spread}} entre el mercado más barato y el más caro",
+    "highlightAverage": "Precio promedio global con impuestos: {{price}}",
+    "daysLabel": "{{value}} días",
+    "priceRange": "{{min}} → {{max}}",
+    "scoreLabel": "Índice de accesibilidad",
+    "noData": "Datos de comparación no disponibles"
+  },
+  "emptyState": {
+    "title": "¿Listo para comparar precios de autos?",
+    "description": "Ingresa cualquier modelo en la barra de búsqueda para ver precios en tiempo real, análisis de accesibilidad e información económica"
+  },
+  "comparison": {
+    "dataUpdated": "Datos actualizados: {{value}}",
+    "fxUpdated": "Tipo de cambio actualizado: {{value}} ({{currency}} · {{symbol}})",
+    "columns": {
+      "country": "País",
+      "taxedPrice": "Precio con impuestos",
+      "taxFreePrice": "Precio sin impuestos",
+      "minimumWage": "Salario mín./mes",
+      "daysToBuy": "Días para comprar",
+      "powerScore": "Puntaje de poder",
+      "equivalentValue": "Valor equivalente",
+      "currency": "Moneda"
+    },
+    "taxSavings": "-{{value}}% impuesto",
+    "hourly": "{{value}}/h",
+    "days": "{{value}} días",
+    "summary": {
+      "countriesCompared": "Países comparados",
+      "bestAffordability": "Mejor accesibilidad",
+      "lowestPrice": "Precio más bajo",
+      "highestWage": "Salario más alto"
+    },
+    "loading": "Cargando datos de comparación..."
+  },
+  "countryPanel": {
+    "toggleHint": "Haz clic para ver detalles",
+    "loading": "Cargando detalles del país...",
+    "error": "No se pudieron cargar los datos del país",
+    "lastUpdated": "Última actualización: {{value}}"
+  }
+}

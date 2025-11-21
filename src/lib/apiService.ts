@@ -269,8 +269,10 @@ class ApiService {
   /**
    * Get all exchange rates
    */
-  async getExchangeRates(): Promise<{ base: string; rates: Record<string, number> }> {
-    return this.fetchApi<{ base: string; rates: Record<string, number> }>('/exchange/rates');
+  async getExchangeRates(): Promise<{ base: string; rates: Record<string, number>; last_updated?: string; source?: string; }> {
+    return this.fetchApi<{ base: string; rates: Record<string, number>; last_updated?: string; source?: string; }>(
+      '/exchange/rates'
+    );
   }
 
   /**

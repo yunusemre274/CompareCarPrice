@@ -3,13 +3,15 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect, useRef } from "react";
 import { searchCars, Car } from "@/lib/carDatabase";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface SearchBarProps {
   onSearch: (value: string) => void;
   placeholder?: string;
 }
 
-export function SearchBar({ onSearch, placeholder = "Search for any car model..." }: SearchBarProps) {
+export function SearchBar({ onSearch, placeholder }: SearchBarProps) {
+  const { t } = useTranslation();
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState<Car[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -99,7 +101,7 @@ export function SearchBar({ onSearch, placeholder = "Search for any car model...
         <Input
           ref={inputRef}
           type="text"
-          placeholder={placeholder}
+          placeholder={placeholder ?? t("search.placeholder")}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -145,13 +147,13 @@ export function SearchBar({ onSearch, placeholder = "Search for any car model...
                 </div>
               </div>
               <div className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
-                Press Enter
+                {t("search.pressEnter")}
               </div>
             </button>
           ))}
           
           <div className="px-4 py-2 bg-muted/50 text-xs text-muted-foreground border-t border-border">
-            Showing top {suggestions.length} results alphabetically
+            {t("search.suggestions", { count: suggestions.length })}
           </div>
         </div>
       )}

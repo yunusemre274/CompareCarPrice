@@ -1,0 +1,119 @@
+{
+  "common": {
+    "appName": "CarCompare",
+    "tagline": "مقارنة أسعار عالمية",
+    "loading": "جارٍ التحميل...",
+    "loadingComparison": "يتم تحميل بيانات المقارنة...",
+    "dataUpdated": "تم تحديث البيانات",
+    "fxUpdated": "تحديث سعر الصرف",
+    "lastUpdated": "آخر تحديث",
+    "notAvailable": "غير متوفر"
+  },
+  "nav": {
+    "title": "CarCompare",
+    "subtitle": "مقارنة أسعار عالمية"
+  },
+  "languageSelector": {
+    "label": "اللغة",
+    "button": "اختر اللغة"
+  },
+  "currencySelector": {
+    "placeholder": "اختر العملة...",
+    "search": "ابحث عن عملة...",
+    "empty": "لا توجد عملة مطابقة"
+  },
+  "hero": {
+    "badge": "قارن أكثر من 250 سيارة في 30+ دولة",
+    "heading": "مقارنة أسعار السيارات عالميًا",
+    "description": "اكتشف أسعار السيارات في الوقت الفعلي مع تحليلات اقتصادية ومؤشرات القوة الشرائية ومقاييس القدرة على الشراء"
+  },
+  "stats": {
+    "realtime": "بيانات لحظية",
+    "multiCurrency": "دعم متعدد العملات",
+    "countries": "أكثر من 30 دولة"
+  },
+  "search": {
+    "placeholder": "ابحث عن أي طراز سيارة...",
+    "pressEnter": "اضغط Enter",
+    "suggestions": "عرض أفضل {{count}} نتائج حسب الترتيب الأبجدي"
+  },
+  "results": {
+    "notFound": "الطراز \"{{query}}\" غير موجود في قاعدة البيانات",
+    "suggestionsIntro": "جرّب البحث عن:",
+    "showingPrices": "نعرض الأسعار بعملة {{currency}} في {{count}} دولة",
+    "basePriceLabel": "السعر الأساسي (دولار)"
+  },
+  "errors": {
+    "fetchFailed": "تعذر جلب بيانات المقارنة"
+  },
+  "infoCard": {
+    "title": "حول هذه البيانات:",
+    "points": [
+      "تشمل الأسعار الضرائب المحلية والرسوم الجمركية عند توفرها",
+      "تعكس بيانات الحد الأدنى للأجور الدخل الشهري الصافي بالدولار",
+      "يُحسب عدد الأيام للشراء بقسمة الأجر الشهري على 30 يومًا",
+      "درجة القوة الشرائية من 0 إلى 100 (الأعلى يعني قدرة شراء أفضل)",
+      "يتم تحديث أسعار الصرف كل 15 دقيقة",
+      "المصادر الاقتصادية: البنك الدولي وصندوق النقد الدولي وواجهة REST Countries",
+      "انقر على أي صف دولة لعرض التفاصيل الاقتصادية"
+    ],
+    "footer": "مصدر البيانات: {{source}} • آخر تحديث: {{timestamp}}"
+  },
+  "carPanel": {
+    "title": "نظرة عامة على السيارة",
+    "subtitle": "{{brand}} • {{category}} • {{year}}",
+    "basePriceLabel": "السعر الأساسي (دولار)",
+    "basePriceInfo": "سعر المصنع المقترح بالدولار",
+    "currencyContext": "معروض بعملة {{currency}}",
+    "cheapestMarket": "أرخص سوق",
+    "expensiveMarket": "أغلى سوق",
+    "bestAffordability": "أفضل قدرة شرائية",
+    "averagePrice": "متوسط السعر بعد الضريبة",
+    "priceSpread": "مدى الأسعار",
+    "marketHighlights": "أبرز الأسواق",
+    "topMarkets": "أسواق الفرص",
+    "watchMarkets": "أسواق مرتفعة التكلفة",
+    "highlightCheapest": "{{country}} يقدم أقل سعر شامل للضرائب بقيمة {{price}}",
+    "highlightExpensive": "{{country}} يسجل أعلى سعر شامل للضرائب بقيمة {{price}}",
+    "highlightSpread": "فارق مقداره {{spread}} بين الأرخص والأغلى",
+    "highlightAverage": "متوسط السعر العالمي بعد الضريبة: {{price}}",
+    "daysLabel": "{{value}} يومًا",
+    "priceRange": "{{min}} → {{max}}",
+    "scoreLabel": "مؤشر القدرة على الشراء",
+    "noData": "لا تتوفر بيانات للمقارنة"
+  },
+  "emptyState": {
+    "title": "هل أنت مستعد لمقارنة أسعار السيارات؟",
+    "description": "اكتب أي طراز في شريط البحث أعلاه لعرض الأسعار الفورية وتحليل القدرة على الشراء والرؤى الاقتصادية حول العالم"
+  },
+  "comparison": {
+    "dataUpdated": "تم تحديث البيانات: {{value}}",
+    "fxUpdated": "تحديث سعر الصرف: {{value}} ({{currency}} · {{symbol}})",
+    "columns": {
+      "country": "الدولة",
+      "taxedPrice": "السعر شامل الضريبة",
+      "taxFreePrice": "السعر بدون ضريبة",
+      "minimumWage": "الحد الأدنى للأجور/شهر",
+      "daysToBuy": "أيام للشراء",
+      "powerScore": "درجة القوة",
+      "equivalentValue": "قيمة مكافئة",
+      "currency": "العملة"
+    },
+    "taxSavings": "-{{value}}% ضريبة",
+    "hourly": "{{value}}/ساعة",
+    "days": "{{value}} يومًا",
+    "summary": {
+      "countriesCompared": "عدد الدول",
+      "bestAffordability": "أفضل قدرة على الشراء",
+      "lowestPrice": "أقل سعر",
+      "highestWage": "أعلى أجر"
+    },
+    "loading": "يتم تحميل بيانات المقارنة..."
+  },
+  "countryPanel": {
+    "toggleHint": "انقر لعرض التفاصيل",
+    "loading": "جارٍ تحميل تفاصيل الدولة...",
+    "error": "تعذر تحميل تفاصيل الدولة",
+    "lastUpdated": "آخر تحديث: {{value}}"
+  }
+}

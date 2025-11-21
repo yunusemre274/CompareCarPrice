@@ -1,26 +1,45 @@
 import { fetchWithCache } from '../utils/apiFetcher.js';
 
-/**
- * Get exchange rates with USD as base
- * Using exchangerate.host (free, no API key required)
- */
-// Fallback exchange rates (common currencies, 1 USD = X currency)
+const RATE_CACHE_SECONDS = parseInt(process.env.EXCHANGE_RATE_CACHE_SECONDS, 10) || 900; // 15 minutes
+const SUPPORTED_CURRENCIES = [
+  'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'INR', 'BRL', 'MXN', 'KRW',
+  'SEK', 'NOK', 'DKK', 'PLN', 'TRY', 'ARS', 'ZAR', 'SAR', 'AED', 'SGD', 'NZD'
+];
+
+// Fallback exchange rates (1 USD = X currency)
 const FALLBACK_RATES = {
   USD: 1, EUR: 0.92, GBP: 0.79, JPY: 150, CAD: 1.35, AUD: 1.52, CHF: 0.89,
-  CNY: 7.2, INR: 83, BRL: 4.95, MXN: 17, RUB: 92, KRW: 1320, SEK: 10.5,
+  CNY: 7.2, INR: 83, BRL: 4.95, MXN: 17, KRW: 1320, SEK: 10.5,
   NOK: 10.7, DKK: 6.9, PLN: 4.0, TRY: 32, ARS: 880, ZAR: 19, SAR: 3.75,
   AED: 3.67, SGD: 1.34, NZD: 1.62
 };
 
+const formatRatesResponse = (rates, source = 'exchangerate.host') => ({
+  base: 'USD',
+  date: new Date().toISOString().split('T')[0],
+  rates: { USD: 1, ...rates },
+  last_updated: new Date().toISOString(),
+  source
+});
+
+const fetchLiveRates = async () => {
+  const url = `https://api.exchangerate.host/latest?base=USD&symbols=${SUPPORTED_CURRENCIES.join(',')}`;
+  const data = await fetchWithCache(url, {}, RATE_CACHE_SECONDS);
+
+  if (!data || !data.rates) {
+    throw new Error('Invalid exchange rate response');
+  }
+
+  return formatRatesResponse(data.rates, 'exchangerate.host');
+};
+
 export const getExchangeRates = async () => {
-  // Use fallback rates directly to avoid API timeout
-  return {
-    base: 'USD',
-    date: new Date().toISOString().split('T')[0],
-    rates: FALLBACK_RATES,
-    last_updated: new Date().toISOString(),
-    source: 'fallback_data'
-  };
+  try {
+    return await fetchLiveRates();
+  } catch (error) {
+    console.error('Live exchange rate fetch failed, falling back to static rates:', error.message);
+    return formatRatesResponse(FALLBACK_RATES, 'fallback_data');
+  }
 };
 
 /**
@@ -30,24 +49,29 @@ export const getExchangeRates = async () => {
  * @param {number} amount - Amount to convert
  */
 export const convertCurrency = async (from, to, amount = 1) => {
-  const url = `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`;
-  
-  try {
-    const data = await fetchWithCache(url, {}, 600); // Cache for 10 minutes
-    
-    return {
-      from,
-      to,
-      amount,
-      result: data.result,
-      rate: data.info?.rate || (data.result / amount),
-      last_updated: new Date().toISOString(),
-      source: 'exchangerate.host'
-    };
-  } catch (error) {
-    console.error('Currency conversion error:', error);
-    throw new Error('Failed to convert currency');
+  const normalizedFrom = from.toUpperCase();
+  const normalizedTo = to.toUpperCase();
+  const ratesData = await getExchangeRates();
+
+  const fromRate = normalizedFrom === ratesData.base ? 1 : ratesData.rates[normalizedFrom];
+  const toRate = normalizedTo === ratesData.base ? 1 : ratesData.rates[normalizedTo];
+
+  if (!fromRate || !toRate) {
+    throw new Error(`Unsupported currency code(s): ${normalizedFrom}, ${normalizedTo}`);
   }
+
+  const usdValue = normalizedFrom === ratesData.base ? amount : amount / fromRate;
+  const result = normalizedTo === ratesData.base ? usdValue : usdValue * toRate;
+
+  return {
+    from: normalizedFrom,
+    to: normalizedTo,
+    amount,
+    result,
+    rate: result / amount,
+    last_updated: ratesData.last_updated,
+    source: ratesData.source
+  };
 };
 
 /**
