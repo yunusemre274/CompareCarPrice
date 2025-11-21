@@ -77,6 +77,15 @@
     "highlightExpensive": "{{country}} shows the highest taxed price at {{price}}",
     "highlightSpread": "Spread of {{spread}} between cheapest and most expensive markets",
     "highlightAverage": "Global average taxed price: {{price}}",
+    "specsHeading": "Key specifications",
+    "specs": {
+      "torque": "Torque",
+      "maxSpeed": "Max speed",
+      "fuelType": "Fuel type",
+      "transmission": "Shift type",
+      "horsepower": "Horsepower",
+      "origin": "Producer country"
+    },
     "daysLabel": "{{value}} days",
     "priceRange": "{{min}} → {{max}}",
     "scoreLabel": "Affordability score",

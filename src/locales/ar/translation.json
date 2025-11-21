@@ -77,6 +77,15 @@
     "highlightExpensive": "{{country}} يسجل أعلى سعر شامل للضرائب بقيمة {{price}}",
     "highlightSpread": "فارق مقداره {{spread}} بين الأرخص والأغلى",
     "highlightAverage": "متوسط السعر العالمي بعد الضريبة: {{price}}",
+    "specsHeading": "المواصفات الأساسية",
+    "specs": {
+      "torque": "العزم",
+      "maxSpeed": "السرعة القصوى",
+      "fuelType": "نوع الوقود",
+      "transmission": "نوع ناقل الحركة",
+      "horsepower": "قوة الحصان",
+      "origin": "بلد الصانع"
+    },
     "daysLabel": "{{value}} يومًا",
     "priceRange": "{{min}} → {{max}}",
     "scoreLabel": "مؤشر القدرة على الشراء",

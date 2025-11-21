@@ -3,6 +3,7 @@ import { CarComparisonResponse, CountryComparisonData } from "@/lib/apiService";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useTranslation } from "react-i18next";
 import { Gauge, Globe2, Sparkles, TrendingDown, TrendingUp } from "lucide-react";
+import { getCarSpecs } from "@/lib/carSpecs";
 
 interface CarDetailPanelProps {
   car: CarComparisonResponse["car"];
@@ -134,6 +135,16 @@ export function CarDetailPanel({ car, countries, selectedCurrency }: CarDetailPa
       car.model
     )}`;
 
+  const specs = getCarSpecs(car.name, car.brand);
+  const specItems = [
+    { label: t("carPanel.specs.torque"), value: specs.torque },
+    { label: t("carPanel.specs.maxSpeed"), value: specs.maxSpeed },
+    { label: t("carPanel.specs.fuelType"), value: specs.fuelType },
+    { label: t("carPanel.specs.transmission"), value: specs.transmission },
+    { label: t("carPanel.specs.horsepower"), value: specs.horsepower },
+    { label: t("carPanel.specs.origin"), value: specs.origin },
+  ];
+
   return (
     <section className="space-y-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -152,31 +163,44 @@ export function CarDetailPanel({ car, countries, selectedCurrency }: CarDetailPa
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
-          <img
-            src={fallbackImage}
-            alt={car.name}
-            className="h-64 w-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-6">
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-xs text-muted-foreground">
-                  {t("carPanel.currencyContext", { currency: selectedCurrency })}
-                </p>
-                <p className="text-3xl font-semibold text-foreground">{averagePrice}</p>
-                <p className="text-xs text-muted-foreground">
-                  {t("carPanel.averagePrice")}
-                </p>
+        <div className="space-y-4">
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
+            <img
+              src={fallbackImage}
+              alt={car.name}
+              className="h-64 w-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6">
+              <div className="flex items-end justify-between">
+                <div>
+                  <p className="text-xs text-muted-foreground">
+                    {t("carPanel.currencyContext", { currency: selectedCurrency })}
+                  </p>
+                  <p className="text-3xl font-semibold text-foreground">{averagePrice}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {t("carPanel.averagePrice")}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                    {t("carPanel.scoreLabel")}
+                  </p>
+                  <p className="text-4xl font-bold text-primary">{score}</p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                  {t("carPanel.scoreLabel")}
-                </p>
-                <p className="text-4xl font-bold text-primary">{score}</p>
-              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <p className="text-sm font-semibold text-foreground mb-3">
+              {t("carPanel.specsHeading")}
+            </p>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+              {specItems.map((item) => (
+                <SpecItem key={item.label} label={item.label} value={item.value} />
+              ))}
             </div>
           </div>
         </div>
@@ -284,6 +308,15 @@ function MarketList({
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function SpecItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-xs uppercase tracking-wide text-muted-foreground">{label}</p>
+      <p className="text-sm font-medium text-foreground">{value}</p>
     </div>
   );
 }

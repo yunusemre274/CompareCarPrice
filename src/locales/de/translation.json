@@ -77,6 +77,15 @@
     "highlightExpensive": "{{country}} weist den höchsten Bruttopreis mit {{price}} auf",
     "highlightSpread": "Spanne von {{spread}} zwischen günstigstem und teuerstem Markt",
     "highlightAverage": "Globaler Durchschnittspreis: {{price}}",
+    "specsHeading": "Wichtigste Daten",
+    "specs": {
+      "torque": "Drehmoment",
+      "maxSpeed": "Höchstgeschwindigkeit",
+      "fuelType": "Kraftstoff",
+      "transmission": "Getriebe",
+      "horsepower": "Leistung",
+      "origin": "Herstellungsland"
+    },
     "daysLabel": "{{value}} Tage",
     "priceRange": "{{min}} → {{max}}",
     "scoreLabel": "Leistbarkeits-Score",
