@@ -1,9 +1,14 @@
-import { useState, useMemo } from "react";
+import { Fragment, Suspense, lazy, useMemo, useState } from "react";
 import { ArrowUpDown, ArrowUp, ArrowDown, Loader2 } from "lucide-react";
 import { CountryComparisonData } from "@/lib/apiService";
 import { Button } from "@/components/ui/button";
-import { CountryPanel } from "@/components/CountryPanel";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { useTranslation } from "react-i18next";
+
+const CountryPanel = lazy(() =>
+  import("@/components/CountryPanel").then((module) => ({ default: module.CountryPanel }))
+);
 
 interface ComparisonTableProps {
   data: CountryComparisonData[];
@@ -19,6 +24,9 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
   const [sortField, setSortField] = useState<SortField | null>("days");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const { format, getSymbol, lastUpdated: fxUpdated, isLoading: fxLoading } = useCurrency();
+  const displayCurrency = selectedCurrency;
+  const { t } = useTranslation();
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -95,18 +103,27 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
     );
   };
 
-  if (isLoading) {
-    return <LoadingSkeleton />;
+  if (isLoading || fxLoading) {
+    return <LoadingSkeleton message={t("comparison.loading")} />;
   }
 
   return (
     <div className="space-y-4">
       {/* Last Updated Timestamp */}
-      {lastUpdated && (
-        <div className="text-sm text-muted-foreground text-right">
-          Last updated: {new Date(lastUpdated).toLocaleString()}
-        </div>
-      )}
+      <div className="flex flex-col gap-1 text-sm text-muted-foreground text-right">
+        {lastUpdated && (
+          <span>{t("comparison.dataUpdated", { value: new Date(lastUpdated).toLocaleString() })}</span>
+        )}
+        {fxUpdated && (
+          <span>
+            {t("comparison.fxUpdated", {
+              value: new Date(fxUpdated).toLocaleTimeString(),
+              currency: displayCurrency,
+              symbol: getSymbol(displayCurrency)
+            })}
+          </span>
+        )}
+      </div>
 
       {/* Table */}
       <div className="w-full overflow-x-auto rounded-lg border border-border shadow-lg">
@@ -119,7 +136,7 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                   onClick={() => handleSort("name")}
                   className="h-auto p-0 hover:bg-transparent font-semibold"
                 >
-                  Country
+                  {t("comparison.columns.country")}
                   <SortIcon field="name" />
                 </Button>
               </th>
@@ -129,7 +146,7 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                   onClick={() => handleSort("taxedPrice")}
                   className="h-auto p-0 hover:bg-transparent font-semibold ml-auto flex items-center"
                 >
-                  Taxed Price
+                  {t("comparison.columns.taxedPrice")}
                   <SortIcon field="taxedPrice" />
                 </Button>
               </th>
@@ -139,7 +156,7 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                   onClick={() => handleSort("taxFreePrice")}
                   className="h-auto p-0 hover:bg-transparent font-semibold ml-auto flex items-center"
                 >
-                  Tax-Free Price
+                  {t("comparison.columns.taxFreePrice")}
                   <SortIcon field="taxFreePrice" />
                 </Button>
               </th>
@@ -149,7 +166,7 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                   onClick={() => handleSort("minimumWage")}
                   className="h-auto p-0 hover:bg-transparent font-semibold ml-auto flex items-center"
                 >
-                  Min. Wage/Month
+                  {t("comparison.columns.minimumWage")}
                   <SortIcon field="minimumWage" />
                 </Button>
               </th>
@@ -159,7 +176,7 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                   onClick={() => handleSort("days")}
                   className="h-auto p-0 hover:bg-transparent font-semibold ml-auto flex items-center"
                 >
-                  Days to Buy
+                  {t("comparison.columns.daysToBuy")}
                   <SortIcon field="days" />
                 </Button>
               </th>
@@ -169,23 +186,22 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                   onClick={() => handleSort("purchasingPower")}
                   className="h-auto p-0 hover:bg-transparent font-semibold ml-auto flex items-center"
                 >
-                  Power Score
+                  {t("comparison.columns.powerScore")}
                   <SortIcon field="purchasingPower" />
                 </Button>
               </th>
               <th className="text-left p-4 font-semibold min-w-[200px]">
-                Equivalent Value
+                {t("comparison.columns.equivalentValue")}
               </th>
               <th className="text-center p-4 font-semibold">
-                Currency
+                {t("comparison.columns.currency")}
               </th>
             </tr>
           </thead>
           <tbody>
             {sortedData.map((country, index) => (
-              <>
+              <Fragment key={country.country_code}>
                 <tr
-                  key={country.country_code}
                   onClick={() => setSelectedCountry(
                     selectedCountry === country.country_code ? null : country.country_code
                   )}
@@ -202,21 +218,32 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                     </div>
                   </td>
                   <td className="p-4 text-right border-b border-border">
-                    <div className="font-mono font-semibold">{country.taxed_price.formatted_usd}</div>
+                    <div className="font-mono font-semibold">
+                      {format(country.taxed_price.usd_value, displayCurrency)}
+                    </div>
                     <div className="text-xs text-muted-foreground mt-0.5">
                       {country.taxed_price.formatted_value_local}
                     </div>
                   </td>
                   <td className="p-4 text-right border-b border-border">
-                    <div className="font-mono text-muted-foreground">{country.tax_free_price.formatted_usd}</div>
+                    <div className="font-mono text-muted-foreground">
+                      {format(country.tax_free_price.usd_value, displayCurrency)}
+                    </div>
                     <div className="text-xs text-green-600 dark:text-green-400 mt-0.5">
-                      -{country.tax_rate_percentage.toFixed(1)}% tax
+                      {t("comparison.taxSavings", { value: country.tax_rate_percentage.toFixed(1) })}
                     </div>
                   </td>
                   <td className="p-4 text-right border-b border-border">
-                    <div className="font-mono text-sm">{country.minimum_wage.monthly.formatted_usd}</div>
+                    <div className="font-mono text-sm">
+                      {format(country.minimum_wage.monthly.usd_value, displayCurrency)}
+                    </div>
                     <div className="text-xs text-muted-foreground mt-0.5">
-                      {country.minimum_wage.hourly.formatted_usd}/hr
+                      {t("comparison.hourly", {
+                        value: format(country.minimum_wage.hourly.usd_value, displayCurrency, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
+                      })}
                     </div>
                   </td>
                   <td className="p-4 text-right border-b border-border">
@@ -226,7 +253,7 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                       country.days_required < 300 ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400" :
                       "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
                     )}>
-                      {country.days_required.toFixed(0)} days
+                      {t("comparison.days", { value: country.days_required.toFixed(0) })}
                     </span>
                   </td>
                   <td className="p-4 text-right border-b border-border">
@@ -262,15 +289,24 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
                 {selectedCountry === country.country_code && (
                   <tr>
                     <td colSpan={8} className="p-0">
-                      <CountryPanel
-                        countryCode={country.country_code}
-                        countryName={country.country_name}
-                        flag={country.flag_emoji}
-                      />
+                      <Suspense
+                        fallback={
+                          <div className="flex items-center justify-center gap-3 py-6 text-sm text-muted-foreground">
+                            <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                            <span>{t("countryPanel.loading")}</span>
+                          </div>
+                        }
+                      >
+                        <CountryPanel
+                          countryCode={country.country_code}
+                          countryName={country.country_name}
+                          flag={country.flag_emoji}
+                        />
+                      </Suspense>
                     </td>
                   </tr>
                 )}
-              </>
+              </Fragment>
             ))}
           </tbody>
         </table>
@@ -279,32 +315,38 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4">
         <StatCard
-          label="Countries Compared"
+          label={t("comparison.summary.countriesCompared")}
           value={data.length.toString()}
           icon="🌍"
         />
         <StatCard
-          label="Best Affordability"
-          value={`${sortedData[0]?.country_name || 'N/A'}`}
-          sublabel={`${sortedData[0]?.days_required.toFixed(0) || '0'} days`}
+          label={t("comparison.summary.bestAffordability")}
+          value={sortedData[0]?.country_name || t("common.notAvailable")}
+          sublabel={sortedData[0]?.days_required
+            ? t("comparison.days", { value: sortedData[0].days_required.toFixed(0) })
+            : t("common.notAvailable")}
           icon="⭐"
         />
         <StatCard
-          label="Lowest Price"
-          value={sortedData.reduce((min, c) => 
-            c.taxed_price.usd_value < min ? c.taxed_price.usd_value : min, Infinity) !== Infinity
-            ? `$${sortedData.reduce((min, c) => c.taxed_price.usd_value < min ? c.taxed_price.usd_value : min, Infinity).toLocaleString()}`
-            : 'N/A'
-          }
+          label={t("comparison.summary.lowestPrice")}
+          value={(() => {
+            const min = sortedData.reduce(
+              (acc, c) => (c.taxed_price.usd_value < acc ? c.taxed_price.usd_value : acc),
+              Infinity
+            );
+            return Number.isFinite(min) ? format(min, displayCurrency) : t("common.notAvailable");
+          })()}
           icon="💵"
         />
         <StatCard
-          label="Highest Wage"
-          value={sortedData.reduce((max, c) => 
-            c.minimum_wage.monthly.usd_value > max ? c.minimum_wage.monthly.usd_value : max, 0) > 0
-            ? `$${sortedData.reduce((max, c) => c.minimum_wage.monthly.usd_value > max ? c.minimum_wage.monthly.usd_value : max, 0).toLocaleString()}`
-            : 'N/A'
-          }
+          label={t("comparison.summary.highestWage")}
+          value={(() => {
+            const max = sortedData.reduce(
+              (acc, c) => (c.minimum_wage.monthly.usd_value > acc ? c.minimum_wage.monthly.usd_value : acc),
+              0
+            );
+            return max > 0 ? format(max, displayCurrency) : t("common.notAvailable");
+          })()}
           icon="💼"
         />
       </div>
@@ -312,12 +354,12 @@ export function ComparisonTable({ data, selectedCurrency, isLoading, lastUpdated
   );
 }
 
-function LoadingSkeleton() {
+function LoadingSkeleton({ message }: { message: string }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-center py-12 bg-card rounded-lg border border-border">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="ml-3 text-muted-foreground">Loading comparison data...</span>
+        <span className="ml-3 text-muted-foreground">{message}</span>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[...Array(4)].map((_, i) => (

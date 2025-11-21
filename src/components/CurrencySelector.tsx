@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 import { currencies } from "@/lib/mockData";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface CurrencySelectorProps {
   value: string;
@@ -23,6 +24,7 @@ interface CurrencySelectorProps {
 
 export function CurrencySelector({ value, onChange }: CurrencySelectorProps) {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
   const selectedCurrency = currencies.find((c) => c.code === value);
 
@@ -40,15 +42,15 @@ export function CurrencySelector({ value, onChange }: CurrencySelectorProps) {
               {selectedCurrency.symbol} {selectedCurrency.code}
             </span>
           ) : (
-            "Select currency..."
+            t("currencySelector.placeholder")
           )}
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[280px] p-0 bg-popover border-border z-50">
         <Command>
-          <CommandInput placeholder="Search currency..." />
-          <CommandEmpty>No currency found.</CommandEmpty>
+          <CommandInput placeholder={t("currencySelector.search")} />
+          <CommandEmpty>{t("currencySelector.empty")}</CommandEmpty>
           <CommandGroup className="max-h-[300px] overflow-auto">
             {currencies.map((currency) => (
               <CommandItem

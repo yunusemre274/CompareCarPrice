@@ -1,27 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { SearchBar } from "@/components/SearchBar";
 import { ComparisonTable } from "@/components/ComparisonTableNew";
+import { CarDetailPanel, CarDetailPanelSkeleton } from "@/components/CarDetailPanel";
 import { Footer } from "@/components/Footer";
 import { apiService, CarComparisonResponse } from "@/lib/apiService";
 import { getCarByName } from "@/lib/carDatabase";
 import { AlertCircle, TrendingUp, DollarSign, Globe2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
-  const [selectedCurrency, setSelectedCurrency] = useState(() => {
-    return localStorage.getItem('selectedCurrency') || 'USD';
-  });
+  const { selectedCurrency, setSelectedCurrency } = useCurrency();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [carData, setCarData] = useState<CarComparisonResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  // Persist currency selection
-  useEffect(() => {
-    localStorage.setItem('selectedCurrency', selectedCurrency);
-  }, [selectedCurrency]);
+  const infoPoints = t("infoCard.points", { returnObjects: true }) as string[];
+  const quickSearchOptions = ["Toyota Camry", "BMW 3 Series", "Tesla Model 3", "Mercedes C-Class", "Honda Civic", "Ford F-150"];
 
   const handleSearch = async (query: string) => {
     if (!query.trim()) return;
@@ -35,15 +34,16 @@ const Index = () => {
       // Check if car exists in our database
       const carInfo = getCarByName(query);
       if (!carInfo) {
-        throw new Error(`Car "${query}" not found in database`);
+        throw new Error(t("results.notFound", { query }));
       }
 
       // Fetch real-time data from API
       const data = await apiService.getCarComparison(query);
       setCarData(data);
-    } catch (err: any) {
-      console.error('Search error:', err);
-      setError(err.message || 'Failed to fetch car comparison data');
+    } catch (err: unknown) {
+      console.error("Search error:", err);
+      const fallback = t("errors.fetchFailed");
+      setError(err instanceof Error ? err.message || fallback : fallback);
       setCarData(null);
     } finally {
       setIsLoading(false);
@@ -62,30 +62,30 @@ const Index = () => {
         <div className="text-center mb-12 space-y-4 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             <Globe2 className="h-4 w-4" />
-            <span>Compare 250+ Cars Across 30+ Countries</span>
+            <span>{t("hero.badge")}</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-            Global Car Price Comparison
+            {t("hero.heading")}
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover real-time car prices worldwide with economic insights, purchasing power analysis, and affordability metrics
+            {t("hero.description")}
           </p>
 
           {/* Quick Stats */}
           <div className="flex items-center justify-center gap-6 pt-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-green-500" />
-              <span>Real-time Data</span>
+              <span>{t("stats.realtime")}</span>
             </div>
             <div className="flex items-center gap-2">
               <DollarSign className="h-4 w-4 text-primary" />
-              <span>Multi-currency Support</span>
+              <span>{t("stats.multiCurrency")}</span>
             </div>
             <div className="flex items-center gap-2">
               <Globe2 className="h-4 w-4 text-blue-500" />
-              <span>30+ Countries</span>
+              <span>{t("stats.countries")}</span>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@ const Index = () => {
                 <AlertDescription>
                   {error}
                   <div className="mt-2 text-sm">
-                    Try searching for: Toyota Camry, BMW 3 Series, Tesla Model 3, Mercedes C-Class, or Honda Civic
+                    {t("results.suggestionsIntro")} {quickSearchOptions.slice(0, 5).join(", ")}
                   </div>
                 </AlertDescription>
               </Alert>
@@ -129,17 +129,23 @@ const Index = () => {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground mt-2">
-                        Showing prices in {selectedCurrency} across {carData.total_countries} countries
+                        {t("results.showingPrices", { currency: selectedCurrency, count: carData.total_countries })}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-muted-foreground mb-1">Base Price (USD)</p>
+                      <p className="text-sm text-muted-foreground mb-1">{t("results.basePriceLabel")}</p>
                       <p className="text-3xl font-bold text-primary">
                         ${carData.car.base_price_usd.toLocaleString()}
                       </p>
                     </div>
                   </div>
                 </div>
+
+                <CarDetailPanel
+                  car={carData.car}
+                  countries={carData.countries}
+                  selectedCurrency={selectedCurrency}
+                />
 
                 {/* Comparison Table */}
                 <ComparisonTable
@@ -154,24 +160,27 @@ const Index = () => {
                   <div className="flex gap-3">
                     <AlertCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                     <div className="space-y-2 text-sm text-muted-foreground">
-                      <p className="font-semibold text-foreground">About this data:</p>
+                      <p className="font-semibold text-foreground">{t("infoCard.title")}</p>
                       <ul className="space-y-1 list-disc list-inside">
-                        <li>Prices include local taxes and import duties where applicable</li>
-                        <li>Minimum wage data reflects monthly net income in USD</li>
-                        <li>Days to buy calculation assumes monthly wage divided by 30 days</li>
-                        <li>Purchasing power score: 0-100 scale (higher is better affordability)</li>
-                        <li>Currency exchange rates updated every 15 minutes</li>
-                        <li>Economic data sourced from World Bank, IMF, and REST Countries API</li>
-                        <li>Click on any country row to see detailed economic information</li>
+                        {infoPoints.map((point) => (
+                          <li key={point}>{point}</li>
+                        ))}
                       </ul>
                       <div className="pt-2 border-t border-border mt-3">
                         <p className="text-xs">
-                          Data Source: {carData.source} • Last Updated: {new Date(carData.last_updated).toLocaleString()}
+                          {t("infoCard.footer", {
+                            source: carData.source,
+                            timestamp: new Date(carData.last_updated).toLocaleString(),
+                          })}
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+            ) : isLoading ? (
+              <div className="space-y-6">
+                <CarDetailPanelSkeleton />
               </div>
             ) : null}
           </div>
@@ -181,12 +190,12 @@ const Index = () => {
         {!hasSearched && (
           <div className="text-center py-12 space-y-6">
             <div className="text-6xl mb-4">🚗</div>
-            <h3 className="text-2xl font-semibold">Ready to compare car prices?</h3>
+            <h3 className="text-2xl font-semibold">{t("emptyState.title")}</h3>
             <p className="text-muted-foreground max-w-md mx-auto">
-              Enter any car model in the search bar above to see real-time prices, affordability analysis, and economic insights across the globe
+              {t("emptyState.description")}
             </p>
             <div className="flex flex-wrap gap-2 justify-center pt-4">
-              {['Toyota Camry', 'BMW 3 Series', 'Tesla Model 3', 'Mercedes C-Class', 'Honda Civic', 'Ford F-150'].map((car) => (
+              {quickSearchOptions.map((car) => (
                 <button
                   key={car}
                   onClick={() => handleSearch(car)}

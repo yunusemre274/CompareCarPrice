@@ -22,4 +22,17 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom", "react-router-dom"],
+          recharts: ["recharts"],
+          i18n: ["react-i18next", "i18next", "i18next-browser-languagedetector"],
+          ui: ["lucide-react", "@tanstack/react-query"],
+        },
+      },
+    },
+  },
 }));

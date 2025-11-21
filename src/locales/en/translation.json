@@ -1,0 +1,119 @@
+{
+  "common": {
+    "appName": "CarCompare",
+    "tagline": "Global Price Comparison",
+    "loading": "Loading...",
+    "loadingComparison": "Loading comparison data...",
+    "dataUpdated": "Data updated",
+    "fxUpdated": "FX updated",
+    "lastUpdated": "Last updated",
+    "notAvailable": "N/A"
+  },
+  "nav": {
+    "title": "CarCompare",
+    "subtitle": "Global Price Comparison"
+  },
+  "languageSelector": {
+    "label": "Language",
+    "button": "Select language"
+  },
+  "currencySelector": {
+    "placeholder": "Select currency...",
+    "search": "Search currency...",
+    "empty": "No currency found."
+  },
+  "hero": {
+    "badge": "Compare 250+ Cars Across 30+ Countries",
+    "heading": "Global Car Price Comparison",
+    "description": "Discover real-time car prices worldwide with economic insights, purchasing power analysis, and affordability metrics"
+  },
+  "stats": {
+    "realtime": "Real-time Data",
+    "multiCurrency": "Multi-currency Support",
+    "countries": "30+ Countries"
+  },
+  "search": {
+    "placeholder": "Search for any car model...",
+    "pressEnter": "Press Enter",
+    "suggestions": "Showing top {{count}} results alphabetically"
+  },
+  "results": {
+    "notFound": "Car \"{{query}}\" not found in database",
+    "suggestionsIntro": "Try searching for:",
+    "showingPrices": "Showing prices in {{currency}} across {{count}} countries",
+    "basePriceLabel": "Base Price (USD)"
+  },
+  "errors": {
+    "fetchFailed": "Failed to fetch car comparison data"
+  },
+  "infoCard": {
+    "title": "About this data:",
+    "points": [
+      "Prices include local taxes and import duties where applicable",
+      "Minimum wage data reflects monthly net income in USD",
+      "Days to buy calculation assumes monthly wage divided by 30 days",
+      "Purchasing power score: 0-100 scale (higher is better affordability)",
+      "Currency exchange rates updated every 15 minutes",
+      "Economic data sourced from World Bank, IMF, and REST Countries API",
+      "Click on any country row to see detailed economic information"
+    ],
+    "footer": "Data Source: {{source}} • Last Updated: {{timestamp}}"
+  },
+  "carPanel": {
+    "title": "Vehicle overview",
+    "subtitle": "{{brand}} • {{category}} • {{year}}",
+    "basePriceLabel": "Base price (USD)",
+    "basePriceInfo": "Manufacturer suggested USD pricing",
+    "currencyContext": "Shown in {{currency}}",
+    "cheapestMarket": "Cheapest market",
+    "expensiveMarket": "Most expensive market",
+    "bestAffordability": "Best affordability",
+    "averagePrice": "Average taxed price",
+    "priceSpread": "Price spread",
+    "marketHighlights": "Market highlights",
+    "topMarkets": "Top opportunity markets",
+    "watchMarkets": "High-cost markets",
+    "highlightCheapest": "{{country}} offers the lowest taxed price at {{price}}",
+    "highlightExpensive": "{{country}} shows the highest taxed price at {{price}}",
+    "highlightSpread": "Spread of {{spread}} between cheapest and most expensive markets",
+    "highlightAverage": "Global average taxed price: {{price}}",
+    "daysLabel": "{{value}} days",
+    "priceRange": "{{min}} → {{max}}",
+    "scoreLabel": "Affordability score",
+    "noData": "Comparison data unavailable"
+  },
+  "emptyState": {
+    "title": "Ready to compare car prices?",
+    "description": "Enter any car model in the search bar above to see real-time prices, affordability analysis, and economic insights across the globe"
+  },
+  "comparison": {
+    "dataUpdated": "Data updated: {{value}}",
+    "fxUpdated": "FX updated: {{value}} ({{currency}} · {{symbol}})",
+    "columns": {
+      "country": "Country",
+      "taxedPrice": "Taxed Price",
+      "taxFreePrice": "Tax-Free Price",
+      "minimumWage": "Min. Wage/Month",
+      "daysToBuy": "Days to Buy",
+      "powerScore": "Power Score",
+      "equivalentValue": "Equivalent Value",
+      "currency": "Currency"
+    },
+    "taxSavings": "-{{value}}% tax",
+    "hourly": "{{value}}/hr",
+    "days": "{{value}} days",
+    "summary": {
+      "countriesCompared": "Countries Compared",
+      "bestAffordability": "Best Affordability",
+      "lowestPrice": "Lowest Price",
+      "highestWage": "Highest Wage"
+    },
+    "loading": "Loading comparison data..."
+  },
+  "countryPanel": {
+    "toggleHint": "Click to view detailed information",
+    "loading": "Loading country details...",
+    "error": "Unable to load country details",
+    "lastUpdated": "Last updated: {{value}}"
+  }
+}

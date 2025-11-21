@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PriceType {
+  NEW
+  USED
+  TAXED
+  UNTAXED
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+model CarBrand {
+  id        String  @id @default(cuid())
+  name      String  @unique
+  country   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cars      Car[]
+}
+
+model Car {
+  id         String   @id @default(cuid())
+  brandId    String
+  brand      CarBrand @relation(fields: [brandId], references: [id])
+  model      String
+  generation String?
+  baseYear   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  trims      CarTrim[]
+}
+
+model CarTrim {
+  id            String   @id @default(cuid())
+  carId         String
+  car           Car      @relation(fields: [carId], references: [id])
+  name          String
+  year          Int
+  enginePowerHp Int?
+  torqueNm      Int?
+  fuelType      String?
+  transmission  String?
+  fuelCityL100  Float?
+  fuelHwyL100   Float?
+  displacementL Float?
+  drivetrain    String?
+  imageUrl      String?
+  specs         Json
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  prices        CarPrice[]
+}
+
+model Country {
+  code            String @id
+  name            String
+  currencyCode    String
+  taxRatePercent  Float?
+  minimumWageUsd  Float?
+  purchasingPower Float?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  metrics         CountryMetric[]
+  prices          CarPrice[]
+}
+
+model CountryMetric {
+  id           String   @id @default(cuid())
+  countryCode  String
+  country      Country  @relation(fields: [countryCode], references: [code])
+  source       String
+  gdpUsd       Float?
+  inflationPct Float?
+  interestRate Float?
+  unemployment Float?
+  costOfLiving Float?
+  purchasingPp Float?
+  capturedAt   DateTime @default(now())
+}
+
+model CarPrice {
+  id          String   @id @default(cuid())
+  carTrimId   String
+  carTrim     CarTrim  @relation(fields: [carTrimId], references: [id])
+  countryCode String
+  country     Country  @relation(fields: [countryCode], references: [code])
+  priceType   PriceType
+  amountUsd   Decimal  @db.Decimal(18, 2)
+  source      String
+  mileage     Int?
+  listedAt    DateTime @default(now())
+}
+
+model ExchangeRate {
+  id         String   @id @default(cuid())
+  base       String
+  target     String
+  rate       Decimal @db.Decimal(18, 6)
+  provider   String
+  capturedAt DateTime @default(now())
+  expiresAt  DateTime
+}
+
+model IngestionJob {
+  id         String   @id @default(cuid())
+  type       String
+  status     JobStatus @default(PENDING)
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+  error      String?
+  metadata   Json?
+}
