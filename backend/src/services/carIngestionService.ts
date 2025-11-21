@@ -58,7 +58,7 @@ const ensureTrim = async (carId: string, normalized: ReturnType<typeof normalize
   if (existing) {
     return prisma.carTrim.update({
       where: { id: existing.id },
-      data: normalized
+      data: (normalized as any)
     });
   }
 
