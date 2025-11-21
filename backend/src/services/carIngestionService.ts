@@ -65,7 +65,7 @@ const ensureTrim = async (carId: string, normalized: ReturnType<typeof normalize
   return prisma.carTrim.create({
     data: {
       carId,
-      ...normalized
+      ...(normalized as any)
     }
   });
 };
